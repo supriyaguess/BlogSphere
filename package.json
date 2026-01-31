@@ -1,0 +1,41 @@
+{
+  "name": "blogsphere",
+  "version": "1.0.0",
+  "description": "A full‑stack Blogging Application built with Node.js, Express, and MongoDB that allows users to create, edit, publish, and manage blog posts with authentication, authorization, and modern RESTful APIs. This project focuses on clean backend architecture, scalable APIs, and real‑world backend practices, making it ideal for production use and backend developer portfolios.",
+  "keywords": [
+    "blog",
+    "blogging-app",
+    "nodejs",
+    "express",
+    "mongodb",
+    "rest-api",
+    "backend",
+    "authentication",
+    "authorization",
+    "full-stack"
+  ],
+  "homepage": "https://github.com/supriyaguess/BlogSphere#readme",
+  "bugs": {
+    "url": "https://github.com/supriyaguess/BlogSphere/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supriyaguess/BlogSphere.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

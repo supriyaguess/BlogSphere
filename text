@@ -1,0 +1,27 @@
+npm i nodemon -D ===> -D What is this 
+this is DevDependencies
+What is DevDependencies..?
+it is needed in Development environment
+not needed in production world because we d not neet to restart the server again n again
+when we develop project we need express, ejs , nodemon thats why we install them but for deployment DevDependencies will not install which makes project size smaller shorter
+
+crypto hash
+A cryptographic hash is a one-way mathematical function that takes any input (password, file, data) and converts it into a fixed-length string called a hash.
+2️⃣ Data Integrity
+
+Used to verify data hasn’t been changed.
+3️⃣ Authentication & Security
+
+Used in:
+
+JWT signing
+
+API tokens
+
+Digital signatures
+
+4️⃣ Blockchain & Crypto
+
+Each block stores previous block’s hash
+
+Any change breaks the chain → tamper-proof
