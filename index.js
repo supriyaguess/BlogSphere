@@ -5,22 +5,30 @@ const mongoose = require("mongoose");
 const userRoute = require("./routes/user");
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
-mongoose.connect("mongodb://localhost:27017/blogify")
-.then(() => console.log("MongoDB Connected"));
+// MongoDB Connection
+mongoose
+  .connect("mongodb://localhost:27017/blogify")
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error("MongoDB Error:", err));
 
+// View Engine
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname,"./views"));
+app.set("views", path.join(__dirname, "views"));
 
-app.use(express.urlencoded({ extended: false}));
+// Middlewares
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get("/", (req,res) => {
-    res.render("home");
+// Routes
+app.get("/", (req, res) => {
+  res.render("home");
 });
 
 app.use("/user", userRoute);
 
-app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
-
+// Server
+app.listen(PORT, () => {
+  console.log(`Server Started at PORT: ${PORT}`);
+});
