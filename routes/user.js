@@ -31,22 +31,27 @@ router.post("/signup", async (req, res) => {
 });
 
 /* ===================== SIGNIN LOGIC ===================== */
-router.post("/signin", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { fullName, email, password } = req.body;
 
-    const user = await User.matchPassword(
-      email.trim().toLowerCase(), // IMPORTANT
-      password
-    );
+    if (!fullName || !email || !password) {
+      return res.render("signup", {
+        error: "All fields are required",
+      });
+    }
 
-    console.log("Logged in user:", user.email);
+    await User.create({
+      fullName,
+      email: email.trim().toLowerCase(),
+      password,
+    });
 
-    // TODO: set session / cookie here later
-    return res.redirect("/");
+    return res.redirect("/user/signin");
   } catch (error) {
-    return res.render("signin", { error: error.message });
+    return res.render("signup", { error: error.message });
   }
 });
+
 
 module.exports = router;

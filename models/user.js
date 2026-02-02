@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 const { createHmac, randomBytes } = require("crypto");
 
+
 const userSchema = new Schema(
   {
     fullName: {
@@ -55,7 +56,23 @@ userSchema.pre("save", function (next) {
 });
 
 /* ===================== MATCH PASSWORD ===================== */
-userSchema.static("matchPassword", async function (email, password) {
+const jwt = require("jsonwebtoken");
+
+function createTokenForUser(user) {
+  return jwt.sign(
+    {
+      _id: user._id,
+      email: user.email,
+      role: user.role,
+    },
+    "SECRET_KEY", // move to env later
+    { expiresIn: "7d" }
+  );
+}
+
+
+userSchema.static("matchPasswordAndGenerateToken",
+   async function (email, password) {
   const user = await this.findOne({
     email: email.trim().toLowerCase(), // FIX
   });
@@ -72,7 +89,8 @@ userSchema.static("matchPassword", async function (email, password) {
     throw new Error("Invalid email or password");
   }
 
-  return user;
+  const token = createTokenForUser(user);
+  return token;
 });
 
 const User = model("User", userSchema);

@@ -8,6 +8,10 @@
     <%- include('./partials/scripts') %>
 
     <div class="container mt-4">
+      <% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+<% } %>
+
       <form action="/user/signup" method="post">
         <div class="mb-3">
           <label for="fullName" class="form-label"
@@ -19,6 +23,7 @@
             id="fullName"
             name="fullName"
             aria-describedby="fullName"
+            required
           />
         </div>
         <div class="mb-3">
@@ -31,6 +36,7 @@
             class="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
+            required
           />
           <div id="emailHelp" class="form-text">
             We'll never share your email with anyone else.
@@ -43,6 +49,7 @@
             name="password"
             class="form-control"
             id="exampleInputPassword1"
+            required
           />
         </div>
         
