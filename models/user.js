@@ -1,6 +1,20 @@
 const { Schema, model } = require("mongoose");
 const { createHmac, randomBytes } = require("crypto");
+const JWT = require("jsonwebtoken");
 
+const secret = "$uperMan@123";
+
+function createTokenForUser(user) {
+    const payload = {
+        _id: user._id,
+        email: user.email,
+        fullName: user.fullName,
+        profileImageURL: user.profileImageURL,
+        role: user.role,
+    };
+    const token = JWT.sign(payload, secret);
+    return token;
+}
 
 const userSchema = new Schema(
   {
@@ -13,8 +27,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      lowercase: true, // IMPORTANT
-      trim: true,      // IMPORTANT
+      lowercase: true,
+      trim: true,
     },
 
     salt: {
@@ -40,9 +54,8 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-/* ===================== HASH PASSWORD ===================== */
-userSchema.pre("save", function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
 
   const salt = randomBytes(16).toString("hex");
   const hashedPassword = createHmac("sha256", salt)
@@ -51,30 +64,11 @@ userSchema.pre("save", function (next) {
 
   this.salt = salt;
   this.password = hashedPassword;
-
-  next();
 });
 
-/* ===================== MATCH PASSWORD ===================== */
-const jwt = require("jsonwebtoken");
-
-function createTokenForUser(user) {
-  return jwt.sign(
-    {
-      _id: user._id,
-      email: user.email,
-      role: user.role,
-    },
-    "SECRET_KEY", // move to env later
-    { expiresIn: "7d" }
-  );
-}
-
-
-userSchema.static("matchPasswordAndGenerateToken",
-   async function (email, password) {
+userSchema.statics.matchPasswordAndGenerateToken = async function (email, password) {
   const user = await this.findOne({
-    email: email.trim().toLowerCase(), // FIX
+    email: email.trim().toLowerCase(),
   });
 
   if (!user) {
@@ -91,7 +85,7 @@ userSchema.static("matchPasswordAndGenerateToken",
 
   const token = createTokenForUser(user);
   return token;
-});
+};
 
 const User = model("User", userSchema);
 module.exports = User;
