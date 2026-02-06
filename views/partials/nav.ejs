@@ -11,9 +11,9 @@
         </li>
         <% if (locals.user) { %>
         <li class="nav-item">
-          <a class="nav-link" href="#">Add Blog</a>
-        </li>
-        <li class="nav-item dropdown">
+          <a class="nav-link" href="/blog/add-new">Add Blog</a>
+        </li> 
+        <li class="nav-item dropdown"> 
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <%= user.fullName || user.email %>
           </a>

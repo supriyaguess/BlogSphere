@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { title } = require("node:process");
+
 
 const blogSchema = new Schema({
     title: {
@@ -15,8 +15,8 @@ const blogSchema = new Schema({
          required: false,
     },
     createdBy: {
-        type: Schema.Types>isObjectIdOrHexString,
-        ref: "user",
+        type: Schema.Types.ObjectId,
+        ref: "User",
     },
 },
 { timestamps: true }
