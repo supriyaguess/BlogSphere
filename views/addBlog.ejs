@@ -1,49 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <%- include('./partials/head') %>
-    <title>Add New Blog</title>
-    
-
+  <%- include('./partials/head') %>
+  <title>Add New Blog</title>
 </head>
+
 <body>
-   
-   <%- include('./partials/nav') %>
+  <%- include('./partials/nav') %>
 
-<div class="container mt-3">
-   <form  action="/blog" method="post" enctype="multipart/form-data">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h3 class="mb-4 fw-bold text-center">Write a New Blog ✍️</h3>
 
-      <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input
-      type="text"
-      class="form-control"
-      id="title"
-      name="title"
-      required
-    />
+            <form action="/blog" method="post" enctype="multipart/form-data">
+              <!-- Title -->
+              <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                  required
+                  placeholder="Enter blog title"
+                />
+              </div>
+
+              <!-- Cover Image -->
+              <div class="mb-3">
+                <label for="coverImage" class="form-label">Cover Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="coverImage"
+                  name="coverImage"
+                />
+              </div>
+
+              <!-- Body -->
+              <div class="mb-3">
+                <label for="body" class="form-label">Body</label>
+                <textarea
+                  name="body"
+                  class="form-control"
+                  id="body"
+                  rows="8"
+                  placeholder="Start writing your story..."
+                ></textarea>
+              </div>
+
+              <!-- Submit -->
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg">
+                  Publish Blog
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-    <div class="mb-3">
-    <label for="coverImage" class="form-label">Cover Image</label>
-    <input type="file" 
-    class="form-control" 
-    id="coverImage" 
-    name="coverImage" 
-    aria-describedby="coverImage"
-    />
-  </div>
-  <div class="mb-3">
-   <label for="body" class="form-label">Body</label>
-    <textarea name="body"  class="form-control"  id="body" rows="6"></textarea>
-  
-  </div>
-  <div class="mb-3">
-   <button class="btn btn-primary">Submit</button>
-  </div>
-  </form>
-  </div>
-   <%- include('./partials/scripts') %>
-
+  <%- include('./partials/scripts') %>
 </body>
 </html>

@@ -1,0 +1,84 @@
+/* ===== Global UI polish ===== */
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* Smooth feel */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Container spacing */
+.container {
+  padding-top: 20px;
+  max-width: 1100px;
+}
+
+/* Card UI (we will use this later) */
+.card {
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  margin-bottom: 0;
+  .card {
+  height: 100%;
+}
+
+}
+
+/* Button enhancement (Bootstrap-friendly) */
+.btn {
+  border-radius: 10px;
+}
+/* Blog card layout */
+.blog-list {
+  
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.navbar-brand {
+  letter-spacing: 0.5px;
+}
+
+.nav-link:hover {
+  opacity: 0.85;
+}
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-weight: 600;
+}
+textarea {
+  resize: none;
+}
+
+form label {
+  font-weight: 500;
+}
+.form-control {
+  padding: 10px 12px;
+}
+.card {
+  border-radius: 16px;
+}
+
+.form-label {
+  font-weight: 500;
+}
+.blog-body pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.7;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+
+
