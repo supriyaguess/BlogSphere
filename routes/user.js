@@ -1,7 +1,20 @@
 const { Router } = require("express");
+const multer = require("multer");
+const path = require("path");
 const User = require("../models/user");
 
 const router = Router();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.resolve("./public/uploads"));
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
 
 /* ===================== SIGNUP PAGE ===================== */
 router.get("/signup", (req, res) => {
@@ -14,7 +27,7 @@ router.get("/signin", (req, res) => {
 });
 
 /* ===================== SIGNUP LOGIC ===================== */
-router.post("/signup", async (req, res) => {
+router.post("/signup", upload.single("profileImage"), async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
 
@@ -26,6 +39,7 @@ router.post("/signup", async (req, res) => {
       fullName,
       email: email.trim().toLowerCase(),
       password,
+      profileImageURL: req.file ? `/uploads/${req.file.filename}` : "/images/default.png",
     });
 
     await user.save();
@@ -57,6 +71,40 @@ router.post("/signin", async (req, res) => {
   }
 });
 
+
+/* ===================== PROFILE PAGE ===================== */
+router.get("/profile", (req, res) => {
+  if (!req.user) {
+    return res.redirect("/user/signin");
+  }
+  return res.render("profile", { user: req.user, error: null, success: null });
+});
+
+/* ===================== UPDATE PROFILE PHOTO ===================== */
+router.post("/profile", upload.single("profileImage"), async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.redirect("/user/signin");
+    }
+
+    if (!req.file) {
+      return res.render("profile", { user: req.user, error: "Please select an image", success: null });
+    }
+
+    await User.findByIdAndUpdate(req.user._id, {
+      profileImageURL: `/uploads/${req.file.filename}`,
+    });
+
+    return res.render("profile", { 
+      user: { ...req.user, profileImageURL: `/uploads/${req.file.filename}` }, 
+      error: null, 
+      success: "Profile photo updated successfully!" 
+    });
+  } catch (error) {
+    console.error("Profile update error:", error);
+    return res.render("profile", { user: req.user, error: error.message, success: null });
+  }
+});
 
 /* ===================== LOGOUT LOGIC ===================== */
 router.get("/logout", (req, res) => {

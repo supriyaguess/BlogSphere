@@ -27,13 +27,24 @@
 
         <!-- Author -->
         <div class="d-flex align-items-center gap-3 mt-4">
-          <img
-            src="<%= blog.createdBy.profileImageURL %>"
-            width="45"
-            height="45"
-            class="rounded-circle"
-            style="object-fit: cover"
-          />
+          <% if (blog.createdBy.profileImageURL && blog.createdBy.profileImageURL !== '/images/default.png') { %>
+            <img
+              src="<%= blog.createdBy.profileImageURL %>"
+              width="45"
+              height="45"
+              class="rounded-circle"
+              style="object-fit: cover"
+            />
+          <% } else { %>
+            <div 
+              class="rounded-circle d-inline-flex align-items-center justify-content-center"
+              style="width: 45px; height: 45px; background-color: <%= getColorFromName(blog.createdBy.fullName) %>;"
+            >
+              <span style="color: white; font-size: 18px; font-weight: bold;">
+                <%= getInitials(blog.createdBy.fullName) %>
+              </span>
+            </div>
+          <% } %>
           <div>
             <strong><%= blog.createdBy.fullName %></strong>
             <div class="text-muted small">Author</div>
@@ -74,13 +85,24 @@
         <div>
           <% comments.forEach(comment => { %>
             <div class="d-flex gap-3 mb-3">
-              <img
-                src="<%= comment.createdBy.profileImageURL %>"
-                width="40"
-                height="40"
-                class="rounded-circle"
-                style="object-fit: cover"
-              />
+              <% if (comment.createdBy.profileImageURL && comment.createdBy.profileImageURL !== '/images/default.png') { %>
+                <img
+                  src="<%= comment.createdBy.profileImageURL %>"
+                  width="40"
+                  height="40"
+                  class="rounded-circle"
+                  style="object-fit: cover"
+                />
+              <% } else { %>
+                <div 
+                  class="rounded-circle d-inline-flex align-items-center justify-content-center flex-shrink-0"
+                  style="width: 40px; height: 40px; background-color: <%= getColorFromName(comment.createdBy.fullName) %>;"
+                >
+                  <span style="color: white; font-size: 16px; font-weight: bold;">
+                    <%= getInitials(comment.createdBy.fullName) %>
+                  </span>
+                </div>
+              <% } %>
               <div class="bg-light rounded p-2 w-100">
                 <strong><%= comment.createdBy.fullName %></strong>
                 <pre class="mb-0"><%= comment.content %></pre>

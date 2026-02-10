@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const { getColorFromName, getInitials } = require("./utils/avatar");
 
 const blog = require('./models/blog');
 
@@ -14,7 +15,7 @@ const { checkForAuthenticationCookie } = require("./middlewares/authentication")
 const Blog = require("./models/blog");
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 9000;
 
 // MongoDB Connection
 mongoose
@@ -32,6 +33,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve('./public')));
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie("token"));
+
+// Make avatar helpers available in all views
+app.use((req, res, next) => {
+  res.locals.getColorFromName = getColorFromName;
+  res.locals.getInitials = getInitials;
+  next();
+});
 
 // Routes
 app.get("/", async (req, res) => {

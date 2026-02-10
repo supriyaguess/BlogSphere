@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+  <title>Profile</title>
+</head>
+
+<body>
+  <%- include('./partials/nav') %>
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h3 class="text-center fw-bold mb-4">My Profile 👤</h3>
+
+            <% if (error) { %>
+              <div class="alert alert-danger text-center">
+                <%= error %>
+              </div>
+            <% } %>
+
+            <% if (success) { %>
+              <div class="alert alert-success text-center">
+                <%= success %>
+              </div>
+            <% } %>
+
+            <!-- Current Profile Info -->
+            <div class="text-center mb-4">
+              <% if (user.profileImageURL && user.profileImageURL !== '/images/default.png') { %>
+                <img 
+                  src="<%= user.profileImageURL %>" 
+                  alt="Profile" 
+                  class="rounded-circle mb-3"
+                  style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #dee2e6;"
+                />
+              <% } else { %>
+                <div 
+                  class="rounded-circle mb-3 d-inline-flex align-items-center justify-content-center"
+                  style="width: 150px; height: 150px; background-color: <%= getColorFromName(user.fullName) %>; border: 3px solid #dee2e6;"
+                >
+                  <span style="color: white; font-size: 60px; font-weight: bold;">
+                    <%= getInitials(user.fullName) %>
+                  </span>
+                </div>
+              <% } %>
+              <h5 class="mb-1"><%= user.fullName %></h5>
+              <p class="text-muted"><%= user.email %></p>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Update Profile Photo Form -->
+            <form action="/user/profile" method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label class="form-label fw-bold">Update Profile Photo</label>
+                <input
+                  type="file"
+                  name="profileImage"
+                  class="form-control"
+                  accept="image/*"
+                  required
+                />
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  Upload New Photo
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./partials/scripts') %>
+</body>
+</html>

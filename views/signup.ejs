@@ -21,7 +21,7 @@
               </div>
             <% } %>
 
-            <form action="/user/signup" method="post">
+            <form action="/user/signup" method="post" enctype="multipart/form-data">
               <!-- Full Name -->
               <div class="mb-3">
                 <label class="form-label">Full Name</label>
@@ -50,7 +50,7 @@
               </div>
 
               <!-- Password -->
-              <div class="mb-4">
+              <div class="mb-3">
                 <label class="form-label">Password</label>
                 <input
                   type="password"
@@ -58,6 +58,17 @@
                   class="form-control"
                   placeholder="Create a password"
                   required
+                />
+              </div>
+
+              <!-- Profile Image -->
+              <div class="mb-4">
+                <label class="form-label">Profile Photo (Optional)</label>
+                <input
+                  type="file"
+                  name="profileImage"
+                  class="form-control"
+                  accept="image/*"
                 />
               </div>
 

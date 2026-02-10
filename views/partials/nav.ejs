@@ -27,15 +27,36 @@
 
           <li class="nav-item dropdown">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link dropdown-toggle d-flex align-items-center gap-2"
               href="#"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
+              <% if (user.profileImageURL && user.profileImageURL !== '/images/default.png') { %>
+                <img
+                  src="<%= user.profileImageURL %>"
+                  width="30"
+                  height="30"
+                  class="rounded-circle"
+                  style="object-fit: cover"
+                />
+              <% } else { %>
+                <div 
+                  class="rounded-circle d-inline-flex align-items-center justify-content-center"
+                  style="width: 30px; height: 30px; background-color: <%= getColorFromName(user.fullName) %>;"
+                >
+                  <span style="color: white; font-size: 14px; font-weight: bold;">
+                    <%= getInitials(user.fullName) %>
+                  </span>
+                </div>
+              <% } %>
               <%= user.fullName || user.email %>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="/user/profile">Profile</a>
+              </li>
               <li>
                 <a class="dropdown-item" href="/user/logout">Logout</a>
               </li>
