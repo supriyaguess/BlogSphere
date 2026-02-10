@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 9000;
 
 // MongoDB Connection
 mongoose
-  .connect("mongodb://localhost:27017/blogify")
+  .connect(process.env.MONGO_URL || "mongodb://localhost:27017/blogify")
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("MongoDB Error:", err));
 
